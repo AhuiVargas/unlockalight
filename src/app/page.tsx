@@ -1,18 +1,21 @@
 'use client'
 
 import { useEffect, useState } from 'react';
+import { useTheme } from '../context/ThemeContext'; // Import the theme context
 
 import Header from '@/components/header';
 
 export default function HomePage() {
   const [backgroundImage, setBackgroundImage] = useState('/images/bg1.jpg');
+  const { isDarkMode, toggleTheme } = useTheme(); // Access theme and toggle function from context
 
   useEffect(() => {
     const interval = setInterval(() => {
       setBackgroundImage((prevImage) =>
         prevImage === '/images/bg1.jpg' ? '/images/bg2.jpg' : '/images/bg1.jpg'
       );
-    }, 10000);
+      toggleTheme()
+    }, 100);
 
     const updateBackground = () => {
       if (window.innerWidth < 768) {
@@ -40,8 +43,9 @@ export default function HomePage() {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        transition: 'background-image 0.4s ease-in-out',
+        // transition: 'background-image 0.4s ease-in-out',
         backgroundRepeat: 'no-repeat', 
+        color: isDarkMode ? 'white' : 'black',
       }}
     >
       <Header select={() => {}}/>

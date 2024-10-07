@@ -1,12 +1,17 @@
 import React from "react";
 import Logo from "./logo";
 
+import { useTheme } from '../context/ThemeContext';
+
 interface headerProps {
   select: (data: string) => void;
 }
 
 const Header: React.FC<headerProps> = ({ select }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+
+  const { isDarkMode, toggleTheme } = useTheme();
+
   const navElements = [
     // { id: 0, name: "Home" },
     { id: 1, name: "About us" },
@@ -30,6 +35,9 @@ const Header: React.FC<headerProps> = ({ select }) => {
                 className="hover:underline focus-within:underline"
                 onClick={handleClick}
                 value={item.name}
+                style={{
+                  color: isDarkMode ? 'black' : 'white',
+                }}
               >
                 {item.name}
               </button>
@@ -42,33 +50,43 @@ const Header: React.FC<headerProps> = ({ select }) => {
   
   return (
     <>
-<header className="w-full h-48 p-4 grid grid-cols-6 items-center">
-  {/* Logo Button (Left-Aligned) */}
-  <button
-    className={`flex items-center justify-center font-bold text-xl z-20 max-h-[200px] max-w-[200px]`}
-    onClick={() => select("Home")}
-  >
-    <Logo fill="none" stroke="white" strokeWidth={0.5} />
-  </button>
+      <header className="w-full h-48 p-4 grid grid-cols-6 items-center">
+        {/* Logo Button (Left-Aligned) */}
+        <button
+          className={`flex items-center justify-center font-bold text-xl z-20 max-h-[200px] max-w-[200px]`}
+          onClick={() => select("Home")}
+        >
+          <Logo
+            fill="none"
+            stroke={isDarkMode ? 'black' : 'white'}
+            strokeWidth={0.5}
+            />
+        </button>
 
-  {/* Navigation List (Left-Aligned in the Center Column) */}
-  <div className="hidden grid-cols-subgrid col-span-3 md:block z-20">
-    <nav className="p-4">{navList(false)}</nav>
-  </div>
+        {/* Navigation List (Left-Aligned in the Center Column) */}
+        <div className="hidden grid-cols-subgrid col-span-3 md:block z-20">
+          <nav className="p-4">{navList(false)}</nav>
+        </div>
 
-  {/* Hamburger Icon (Right-Aligned for Mobile) */}
-  <button
-    className={`z-20 md:hidden justify-self-end pr-8`}
-    onClick={() => setIsOpen(!isOpen)}
-  >
-    {/* <Hamburger open={isOpen} size={6}/> */}
-  </button>
+        {/* Hamburger Icon (Right-Aligned for Mobile) */}
+        <button
+          className={`z-20 md:hidden justify-self-end pr-8`}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {/* <Hamburger open={isOpen} size={6}/> */}
+        </button>
 
-  {/* Social Icons (Right-Aligned in the Last Column) */}
-  <div className="hidden md:block my-auto justify-self-end z-20 mr-4">
-    {/* <Social /> */}
-  </div>
-</header>
+        {/* Social Icons (Right-Aligned in the Last Column) */}
+        <div className="hidden md:block my-auto justify-self-end z-20 mr-4">
+          {/* <Social /> */}
+        </div>
+
+        <button onClick={toggleTheme}>
+
+        </button>
+
+
+      </header>
 
     </>
   );
