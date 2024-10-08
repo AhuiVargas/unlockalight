@@ -15,7 +15,7 @@ export default function HomePage() {
         prevImage === '/images/bg1.jpg' ? '/images/bg2.jpg' : '/images/bg1.jpg'
       );
       toggleTheme()
-    }, 100);
+    }, 10000);
 
     const updateBackground = () => {
       if (window.innerWidth < 768) {

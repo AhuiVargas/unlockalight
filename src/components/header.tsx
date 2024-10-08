@@ -1,5 +1,6 @@
 import React from "react";
 import Logo from "./logo";
+import Link from 'next/link'
 
 import { useTheme } from '../context/ThemeContext';
 
@@ -14,16 +15,16 @@ const Header: React.FC<headerProps> = ({ select }) => {
 
   const navElements = [
     // { id: 0, name: "Home" },
-    { id: 1, name: "About us" },
-    { id: 2, name: "Bookings" },
-    { id: 3, name: "Events" },
+    { id: 1, name: "About us", href: '/about' },
+    { id: 2, name: "Bookings", href: '/bookings' },
+    { id: 3, name: "Events", href: '/events' },
   ];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleClick = (e: any) => {
-    select(e.target.value);
-    setIsOpen(false)
-  };
+  // const handleClick = (e: any) => {
+  //   select(e.target.value);
+  //   setIsOpen(false)
+  // };
 
   const navList = (isMobile: boolean) => {
     return (
@@ -31,16 +32,15 @@ const Header: React.FC<headerProps> = ({ select }) => {
         <ul className={`flex ${isMobile ? 'flex-col items-center justify-center' : 'space-x-4'} text-lg`}>
           {navElements.map((item) => (
             <li key={item.id}>
-              <button
-                className="hover:underline focus-within:underline"
-                onClick={handleClick}
-                value={item.name}
+              <Link
+                className="hover:underline focus-within:underline font-medium"
+                href={`${item.href}`}
                 style={{
                   color: isDarkMode ? 'black' : 'white',
                 }}
               >
                 {item.name}
-              </button>
+              </Link>
             </li>
           ))}
         </ul>
@@ -53,7 +53,7 @@ const Header: React.FC<headerProps> = ({ select }) => {
       <header className="w-full h-48 p-4 grid grid-cols-6 items-center">
         {/* Logo Button (Left-Aligned) */}
         <button
-          className={`flex items-center justify-center font-bold text-xl z-20 max-h-[200px] max-w-[200px]`}
+          className={`flex items-end justify-start font-bold text-xl z-20 max-h-[200px] max-w-[200px]`}
           onClick={() => select("Home")}
         >
           <Logo
@@ -65,7 +65,7 @@ const Header: React.FC<headerProps> = ({ select }) => {
 
         {/* Navigation List (Left-Aligned in the Center Column) */}
         <div className="hidden grid-cols-subgrid col-span-3 md:block z-20">
-          <nav className="p-4">{navList(false)}</nav>
+          <nav className=" ml-[-10px]">{navList(false)}</nav>
         </div>
 
         {/* Hamburger Icon (Right-Aligned for Mobile) */}
